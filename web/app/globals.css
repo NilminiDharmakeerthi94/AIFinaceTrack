@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --surface: 15 23 42;
+  --surface-muted: 30 41 59;
+}
+
+html {
+  @apply antialiased;
+}
+
+body {
+  @apply min-h-dvh bg-slate-950 text-slate-100;
+}
+
+@layer utilities {
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}

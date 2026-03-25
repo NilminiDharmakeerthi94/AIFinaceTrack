@@ -1,0 +1,88 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function validUserDoc() {
+      return !('role' in request.resource.data) || request.resource.data.role == 'user';
+    }
+
+    function validCategory() {
+      return request.resource.data.keys().hasOnly(['name', 'color', 'sortOrder'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.color is string
+        && request.resource.data.color.size() <= 20
+        && request.resource.data.sortOrder is int
+        && request.resource.data.sortOrder >= 0
+        && request.resource.data.sortOrder <= 10000;
+    }
+
+    function validTransaction() {
+      return request.resource.data.keys().hasOnly(['type', 'amount', 'categoryId', 'note', 'date', 'createdAt'])
+        && request.resource.data.type in ['income', 'expense']
+        && request.resource.data.amount is number
+        && request.resource.data.amount >= 0
+        && request.resource.data.amount <= 100000000
+        && request.resource.data.note is string
+        && request.resource.data.note.size() <= 500
+        && request.resource.data.date is int
+        && request.resource.data.createdAt is int
+        && (
+          (request.resource.data.type == 'income' && request.resource.data.categoryId == null)
+          || (request.resource.data.type == 'expense'
+              && (!('categoryId' in request.resource.data)
+                  || request.resource.data.categoryId == null
+                  || request.resource.data.categoryId is string))
+        );
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId)
+        && validUserDoc()
+        && request.resource.data.keys().hasOnly(['monthlyIncome', 'monthlyBudget', 'savingsTarget', 'displayName', 'updatedAt', 'role'])
+        && request.resource.data.monthlyIncome is number
+        && request.resource.data.monthlyBudget is number
+        && request.resource.data.savingsTarget is number
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 120
+        && request.resource.data.updatedAt is timestamp
+        && request.resource.data.monthlyIncome >= 0
+        && request.resource.data.monthlyIncome <= 100000000
+        && request.resource.data.monthlyBudget >= 0
+        && request.resource.data.monthlyBudget <= 100000000
+        && request.resource.data.savingsTarget >= 0
+        && request.resource.data.savingsTarget <= 100000000
+        && (!('role' in request.resource.data) || request.resource.data.role == 'user');
+      allow delete: if false;
+
+      match /categories/{categoryId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && validCategory();
+        allow update: if isOwner(userId) && validCategory();
+        allow delete: if isOwner(userId);
+      }
+
+      match /transactions/{transactionId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && validTransaction();
+        allow update: if isOwner(userId) && validTransaction();
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

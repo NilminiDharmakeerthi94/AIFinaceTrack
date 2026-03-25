@@ -62,7 +62,19 @@ Propose a clean, modular layout with clear separation of concerns:
 
 ---
 
-## 6. Security
+## 6. Mobile responsiveness
+
+- **Mobile-first layout** — design for small viewports first, then enhance for tablet and desktop (breakpoints, fluid typography where appropriate).
+- **Responsive UI** — use CSS that adapts across breakpoints (Tailwind responsive utilities, CSS modules with media queries, or CSS-in-JS); avoid fixed widths that break on narrow screens.
+- **Touch and input** — adequate tap targets (roughly 44×44px minimum), spacing between interactive elements, and support for touch gestures where relevant; avoid hover-only critical actions.
+- **Viewport and meta** — correct viewport meta for Next.js / App Router (`metadata` or `viewport` export) so pages scale properly on phones.
+- **Navigation** — collapsible menus, bottom nav, or drawer patterns on small screens; keep primary actions reachable without horizontal scroll.
+- **Performance on mobile** — lazy loading, image sizing (`next/image` with responsive sizes), and avoid layout shift on load.
+- **Testing** — verify layouts at common widths (e.g. 320px, 375px, 768px, 1024px+) and in device emulation or real devices when possible.
+
+---
+
+## 7. Security
 
 - Secure Firebase Authentication (JWT / session handling).
 - Role-based access control (RBAC).
@@ -73,7 +85,7 @@ Propose a clean, modular layout with clear separation of concerns:
 
 ---
 
-## 7. Firebase Hosting
+## 8. Firebase Hosting
 
 - Correct `firebase.json` setup.
 - Caching and CDN-friendly configuration.
@@ -81,7 +93,7 @@ Propose a clean, modular layout with clear separation of concerns:
 
 ---
 
-## 8. CI/CD
+## 9. CI/CD
 
 - GitHub Actions for build and deploy automation.
 - Firebase deploy steps in the pipeline.
@@ -89,7 +101,7 @@ Propose a clean, modular layout with clear separation of concerns:
 
 ---
 
-## 9. Logging and errors
+## 10. Logging and errors
 
 - Centralized error-handling strategy.
 - Firebase Logging, console, or external logging as appropriate.
@@ -97,15 +109,16 @@ Propose a clean, modular layout with clear separation of concerns:
 
 ---
 
-## 10. Testing
+## 11. Testing
 
 - **Unit** — Jest / React Testing Library.
 - **Integration** — APIs with Firebase emulators.
 - **E2E** — outline a basic approach.
+- **Responsive / viewport** — smoke checks or E2E at mobile viewport widths where critical flows differ from desktop.
 
 ---
 
-## 11. README
+## 12. README
 
 Generate a professional `README.md` including:
 
@@ -121,6 +134,7 @@ Generate a professional `README.md` including:
 - CI/CD overview
 - Security notes
 - How to run tests
+- Mobile / responsive behavior (breakpoints, key layout decisions, how to verify on small screens)
 
 ---
 
@@ -139,6 +153,7 @@ Produce the following in your response:
   - Firestore CRUD
   - Sample Cloud Function (HTTP API)
   - Hosting config (`firebase.json`)
+  - Responsive layout patterns (e.g. flexible grid/stack, mobile nav shell) aligned with section 6
 - Firestore security rules (realistic, secure examples)
 - CI/CD example (GitHub Actions)
 - Deployment notes (dev and production)

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Next.js / Firebase web export
+web/.next/
+web/out/
+
+# Cloud Functions build output
+functions/lib/
+
+# Env (never commit secrets)
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Logs / debug
+npm-debug.log*
+firebase-debug.log*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
