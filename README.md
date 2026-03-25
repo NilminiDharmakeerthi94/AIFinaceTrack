@@ -107,6 +107,18 @@ Copy `web/.env.example` to `web/.env.local` and fill values from **Firebase Cons
 
 Do **not** commit `.env.local`. The app only uses **`NEXT_PUBLIC_*`** keys (safe for browser bundle); secrets belong in Functions config/Secret Manager for future APIs.
 
+**Demo login (username → synthetic email):** Enter username **`Mark`** (maps to `mark@ledgerlite.app`) and password **`Test@123456`**. For a hosted Firebase project, create or reset that Auth user once:
+
+```bash
+cd functions
+# Set GOOGLE_APPLICATION_CREDENTIALS to your service account JSON, then:
+# PowerShell: $env:SEED_DEMO_PASSWORD="Test@123456"
+# bash:       export SEED_DEMO_PASSWORD='Test@123456'
+npm run seed:demo-user
+```
+
+Or use **Sign up** on the app with the same username and password (no script). Local `npm run dev` pre-fills Mark / `Test@123456` in the form only in development.
+
 ### 3. Run Next.js locally
 
 ```bash
