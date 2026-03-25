@@ -1,0 +1,14 @@
+<header class="app-header">
+  <a routerLink="/home" class="brand">Login sample</a>
+  <nav>
+    @if (auth.isLoggedIn()) {
+      <a routerLink="/home">Home</a>
+      <button type="button" class="linkish" (click)="auth.logout()">Log out</button>
+    } @else {
+      <a routerLink="/login">Login</a>
+    }
+  </nav>
+</header>
+<main>
+  <router-outlet />
+</main>

@@ -1,0 +1,10 @@
+<div class="panel">
+  <h1>Welcome</h1>
+  @if (auth.currentUser(); as user) {
+    <p class="email">Signed in as <strong>{{ user.email }}</strong></p>
+  }
+  <p class="muted">
+    Angular is served from Firebase Hosting; this session uses your Node API and JWT.
+  </p>
+  <button type="button" class="outline" (click)="logout()">Log out</button>
+</div>

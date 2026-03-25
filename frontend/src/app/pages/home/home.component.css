@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  padding: 2rem;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.panel {
+  padding: 2rem;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+}
+
+.email {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+}
+
+.muted {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.outline {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
